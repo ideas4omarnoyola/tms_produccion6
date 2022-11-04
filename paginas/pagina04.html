@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página 04</title>
+    <title>Página 07</title>
 
     <!-- Estilos -->
     <link rel="stylesheet" href="../css/estilos.css">
@@ -22,14 +22,18 @@
 </head>
 <body class="pagina">
     <img class="elementos" id="texto" src="../img/pagina04/texto.png" data-posX="0" data-posY="0" alt="">
-    <img class="elementos" id="d1" src="../img/pagina04/d1.png" data-posX="0" data-posY="0" alt="">
     <img class="elementos" id="instrucciones" src="../img/pagina04/instrucciones.png" data-posX="0" data-posY="0" alt="">
-    <img class="elementos botones" id="boton1" src="../img/pagina04/boton1.png" data-posX="250" data-posY="173" alt="">
-    <img class="elementos botones" id="boton2" src="../img/pagina04/boton2.png" data-posX="571" data-posY="173" alt="">
-    <img class="elementos" id="pop1" src="../img/pagina04/pop1.png" data-posX="0" data-posY="0" alt="">
-    <img class="elementos" id="pop2" src="../img/pagina04/pop2.png" data-posX="0" data-posY="0" alt="">
-    <img class="elementos botonCerrar" id="cerrar1" src="../img/pagina04/cerrar.png" data-posX="743" data-posY="140" alt="">
-    <img class="elementos botonCerrar" id="cerrar2" src="../img/pagina04/cerrar.png" data-posX="743" data-posY="140" alt="">
+    <img class="elementos" id="d1" src="../img/pagina04/d1.png" data-posX="0" data-posY="0" alt="">
+    
+    <img class="elementos" id="tabla" src="../img/pagina04/tabla.png" data-posX="0" data-posY="0" alt="">
+    <img class="elementos" id="texto2" src="../img/pagina04/texto2.png" data-posX="0" data-posY="0" alt="">
+    <img class="elementos" id="texto3" src="../img/pagina04/texto3.png" data-posX="0" data-posY="0" alt="">
+
+    <img class="elementos botones" id="boton1" src="../img/pagina04/boton1.png" data-posX="362" data-posY="314" alt="">
+    <img class="elementos infos" id="info1" src="../img/pagina04/info1.png" data-posX="0" data-posY="0" alt="">
+
+    <img class="elementos botones" id="boton2" src="../img/pagina04/boton2.png" data-posX="665" data-posY="314" alt="">
+    <img class="elementos infos" id="info2" src="../img/pagina04/info2.png" data-posX="0" data-posY="0" alt="">
 
 
     <!-- Script de la página -->
@@ -41,30 +45,36 @@
         const texto = $('#texto');
         const d1 = $('#d1');
         const instrucciones = $('#instrucciones');
+        const texto2 = $('#texto2');
+        const texto3 = $('#texto3');
+        const tabla = $('#tabla');
+
         const boton1 = $('#boton1');
         const boton2 = $('#boton2');
-        const pop1 = $('#pop1');
-        const pop2 = $('#pop2');
-        const cerrar1 = $('#cerrar1');
-        const cerrar2 = $('#cerrar2');
+        const info1 = $('#info1');
+        const info2 = $('#info2');
+
         const botones = $('.botones');
-        const botonCerrar = $('.botonCerrar');
 
-        const pops = [pop1, pop2];
-        const cerrar = [cerrar1, cerrar2];
-        const botonActivo = [boton1, boton2];
+        const informacion = [info1, info2];
+        const btns = [boton1, boton2];
+        const textos = [texto, tabla, texto2, texto3, instrucciones];
 
-        let indexPop = 0;
+        let indexTextos = 0;
+        let indexInfo = 0;
 
         // Audios------------------------------------------------------
         const audio = [
-            new Audio('../audios/TMS_OEA_M5_04_1.mp3'),
-            new Audio('../audios/TMS_OEA_M5_04_2.mp3')
+            new Audio('../audios/TMS_OEA_M6_04_1.mp3'),
+            new Audio('../audios/TMS_OEA_M6_04_2.mp3'),
+            new Audio('../audios/TMS_OEA_M6_04_3.mp3'),
+            new Audio('../audios/TMS_OEA_M6_04_4.mp3'),
+            new Audio('../audios/TMS_OEA_M6_04_5.mp3'),
         ]
 
-        const audioPop = [
-            new Audio('../audios/TMS_OEA_M5_04_3.mp3'),
-            new Audio('../audios/TMS_OEA_M5_04_4.mp3')
+        const audioInfo = [
+            new Audio('../audios/TMS_OEA_M6_04_6.mp3'),
+            new Audio('../audios/TMS_OEA_M6_04_7.mp3'),
         ]
 
         // Al cargarse la página
@@ -74,52 +84,51 @@
         });
 
         function iniciarContenido(){
-            aplicacion.reproducirAudio(audio[0], dialogo, 1);
-            animacionEntrada(texto, 'default', 1, 1);
-            animacionEntrada(boton1, 'abajo-arriba', 1, 1.5);
-            animacionEntrada(boton2, 'abajo-arriba', 1, 2);
-            animacionEntrada(d1, 'default', 1, 1);
+            aparecerTextos();
         }
 
-        function dialogo(){
-            aplicacion.reproducirAudio(audio[1], botonera, 1);
-            animacionEntrada(instrucciones, 'default', 1, 1);
+        function aparecerTextos() {  
+            aplicacion.reproducirAudio(audio[indexTextos], siguienteTexto, 1);
+            animacionEntrada(textos[indexTextos], 'default', 1, 1);
+
+            if(indexTextos == 2){
+                animacionEntrada(boton1, 'default', 1, 1);
+            }
+
+            if(indexTextos == 3){
+                animacionEntrada(boton2, 'default', 1, 1);
+            }
         }
 
+        function siguienteTexto(){
+            indexTextos++;
+
+            if(indexTextos < textos.length){
+                aparecerTextos();
+            }
+            else{
+                botonera();
+            }
+        }
+        
         function botonera(){
-            parpadear(botonActivo[indexPop]);
+            parpadear(btns[indexInfo]);
         }
 
         botones.each(function(){
-            $(this).click(function(){
+            $(this).click(function () {  
                 if($(this).css('cursor') == 'pointer'){
-                    aplicacion.reproducirAudio(audioPop[indexPop], cerrarPop, 1);
-                    animacionEntrada(pops[indexPop], 'default', 1, 1);
+                    aplicacion.reproducirAudio(audioInfo[indexInfo], siguiente, 1);
+                    animacionEntrada(informacion[indexInfo], 'default', 1);
+                    
                     dejarParpadear($(this));
                 }
             });
         });
 
-        function cerrarPop(){  
-            parpadear(cerrar[indexPop]);
-        }
-
-        botonCerrar.each(function(){
-            $(this).click(function(){
-                if($(this).css('cursor') == 'pointer'){
-                    dejarParpadear($(this));                    
-                    animacionSalida(pops[indexPop], 'default', 1, 1);
-                    animacionSalida(cerrar[indexPop], 'default', 1, 1);
-                    siguiente();
-                }
-            });
-        });
-
-        function siguiente() {  
-            
-            indexPop++;
-
-            if(indexPop < pops.length){
+        function siguiente(){
+            indexInfo++;
+            if(indexInfo < informacion.length){
                 botonera();
             }
             else{
